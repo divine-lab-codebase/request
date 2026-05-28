@@ -1,0 +1,46 @@
+{
+    "name": "@divine-lab/request",
+    "version": "1.0.5",
+    "description": "Simple utility for standardizing request and response objects.",
+    "author": {
+        "name": "Ishpreet Singh",
+        "email": "ishpreet7521@gmail.com",
+        "github": "https://github.com/Ishpreet-Singh-Channa",
+        "linkedin": "https://www.linkedin.com/in/ishpreet-singh-5860ab257"
+    },
+    "license": "SEE LICENSE IN LICENSE",
+    "keywords": [
+        "request",
+        "response",
+        "request utility",
+        "response utility"
+    ],
+    "main": "dist/request.js",
+    "types": "dist/request.d.ts",
+    "files": [
+        "dist"
+    ],
+    "exports": {
+        "./errors": {
+            "default": "./dist/errors/index.js",
+            "types": "./dist/errors/index.d.ts"
+        },
+        "./fastify-helpers": {
+            "default": "./dist/fastify-helpers/index.js",
+            "types": "./dist/fastify-helpers/index.d.ts"
+        }
+    },
+    "scripts": {
+        "prepublishOnly": "tsc",
+        "build": "tsc"
+    },
+    "devDependencies": {
+        "@sinclair/typebox": "^0.34.49",
+        "@types/node": "^25.6.2",
+        "fastify": "^5.8.5",
+        "typescript": "^6.0.3"
+    },
+    "dependencies": {
+        "@divine-lab/logger": "^1.0.2"
+    }
+}
