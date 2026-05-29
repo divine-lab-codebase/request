@@ -109,7 +109,7 @@ export function REGISTER_ROUTE<BodyType extends TObject, QueryType extends TObje
  */
 export async function globalErrorHandler(error: any, _request: FastifyRequest, reply: FastifyReply): Promise<void> {
     if (error instanceof APIError) return errorResponse(reply, error.error, { title: error.title, detail: error.detail, type: error.type, data: error.data, status: error.status });
-    if (error.statusCode && error.statusCode === 429) return errorResponse(reply, "TOO_MANY_REQUESTS", { title: "Too Many Requests", detail: "You have sent too many requests in a given amount of time. Please try again later.", data: error.message.match(/\d+\s+\w+/)?.[0], status: 429 });
+    if (error.statusCode && error.statusCode === 429) return errorResponse(reply, "TOO_MANY_REQUESTS", { title: "Too Many Requests", detail: "You have sent too many requests in a given amount of time. Please try again later.", data: `Retry in ${error.message.match(/\d+\s+\w+/)?.[0]}`, status: 429 });
     if (error.validation) {
         const data = [];
         for (const err of error.validation) data.push({ property: err.instancePath ? err.instancePath.substring(1) : err.params.missingProperty || "unknown", message: `${error.validationContext} ${err.message}` });

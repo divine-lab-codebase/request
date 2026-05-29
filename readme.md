@@ -113,6 +113,11 @@ Additionally if a `400 Bad request` is made, then this handler should handle it 
 Supports API response logging via <a>`@divine-lab/logger`</a>.
 Enable by setting ENV Variable `DIVINE_LAB_REQUEST_API_LOG` to `true`.
 
+#### Updates:
+
+- 1.1.0: added rate limit error response in backend errors and handling it in global error handler (when using `@fastify/rate-limit`)
+- 1.1.1: fixed data response for the rate-limit in global error handler for fastify.
+
 #### Contact:
 
 - mail: <a href="mailto:ishpreet@appshala.com">ishpreet@appshala.com<a>
