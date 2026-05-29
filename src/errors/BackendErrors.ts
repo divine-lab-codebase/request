@@ -52,6 +52,12 @@ export const SERVER_ERRORS = {
         title: "Conflict",
         detail: "The request conflicts with the current state of the server.",
     },
+    TOO_MANY_REQUESTS: {
+        status: 429,
+        type: "about:blank",
+        title: "Too Many Requests",
+        detail: "The user has sent too many requests in a given amount of time.",
+    },
 } as const;
 
 export type ServerErrorKey = keyof typeof SERVER_ERRORS;
