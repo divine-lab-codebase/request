@@ -13,6 +13,7 @@ const INSTANCE_BASE = process.env.DIVINE_LAB_REQUEST_INSTANCE_BASE || "";
 logger.raw(`${colorize("blue", "[API]")} - API instance base path is set to ${colorize("yellow", INSTANCE_BASE)}. Configure this with the ${colorize("yellow", "DIVINE_LAB_REQUEST_INSTANCE_BASE")} environment variable.`);
 
 type httpMethod = "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
+type RateLimitConfig = { max: number; TimeWindow: string; keyGenerator?: (req: FastifyRequest) => string };
 /** Type definition for the success response payload.
  * @property {string} title - short, human-readable summary of the response
  * @property {string} detail - detailed description of the response
@@ -95,8 +96,8 @@ export function successResponse(res: FastifyReply, status = 200, { title = "Succ
  * });
  * ```
  */
-export function REGISTER_ROUTE<BodyType extends TObject, QueryType extends TObject, ParamsType extends TObject>(fastify: FastifyInstance, method: httpMethod, path: string, handler: (req: FastifyRequest<{ Body: Static<BodyType>; Querystring: Static<QueryType>; Params: Static<ParamsType> }>, reply: any) => void, options?: { schema?: { body?: BodyType; querystring?: QueryType; params?: ParamsType }; preHandler?: Array<(req: FastifyRequest, reply: any) => void> | ((req: FastifyRequest, reply: any) => void) }) {
-    fastify[method.toLowerCase() as Lowercase<httpMethod>]<{ Body: Static<BodyType>; Querystring: Static<QueryType>; Params: Static<ParamsType> }>(path, options || {}, handler);
+export function REGISTER_ROUTE<BodyType extends TObject, QueryType extends TObject, ParamsType extends TObject, RateLimitType extends RateLimitConfig | undefined = undefined>(fastify: FastifyInstance, method: httpMethod, path: string, handler: (req: FastifyRequest<{ Body: Static<BodyType>; Querystring: Static<QueryType>; Params: Static<ParamsType>; RateLimit: RateLimitType }>, reply: any) => void, options?: { schema?: { body?: BodyType; querystring?: QueryType; params?: ParamsType }; preHandler?: Array<(req: FastifyRequest, reply: any) => void> | ((req: FastifyRequest, reply: any) => void) } & (RateLimitType extends undefined ? { config?: any } : { config: { rateLimit: RateLimitType } })) {
+    fastify[method.toLowerCase() as Lowercase<httpMethod>]<{ Body: Static<BodyType>; Querystring: Static<QueryType>; Params: Static<ParamsType>; RateLimit: RateLimitType }>(path, options || {}, handler);
 }
 
 /** Centralized error handler for Fastify.
