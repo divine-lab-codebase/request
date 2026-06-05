@@ -110,13 +110,16 @@ Additionally if a `400 Bad request` is made, then this handler should handle it 
 
 ### Environment Variables
 
-Supports API response logging via <a>`@divine-lab/logger`</a>.
-Enable by setting ENV Variable `DIVINE_LAB_REQUEST_API_LOG` to `true`.
+- Supports API response logging via <a>`@divine-lab/logger`</a>.
+  Enable by setting ENV Variable `DIVINE_LAB_REQUEST_API_LOG` to `true`.
+- Supports base path for `instance` property of error responses via `DIVINE_LAB_REQUEST_INSTANCE_BASE`,
+  Defaults to empty string.
 
 #### Updates:
 
 - 1.1.0: added rate limit error response in backend errors and handling it in global error handler (when using `@fastify/rate-limit`)
 - 1.1.1: fixed data response for the rate-limit in global error handler for fastify.
+- 1.2.0: added support for instance base path in error responses via environment variable.
 
 #### Contact:
 

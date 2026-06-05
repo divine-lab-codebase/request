@@ -9,6 +9,8 @@ import logger from "@divine-lab/logger";
 
 const API_LOG = process.env.DIVINE_LAB_REQUEST_API_LOG === "true";
 logger.raw(`${colorize("blue", "[API]")} - API logging is ${API_LOG ? colorize("green", "enabled") : colorize("red", "disabled")} - ${API_LOG ? "API requests and responses will be logged." : `to enable, set ${colorize("yellow", "DIVINE_LAB_REQUEST_API_LOG")}=true in environment variables`}`);
+const INSTANCE_BASE = process.env.DIVINE_LAB_REQUEST_INSTANCE_BASE || "";
+logger.raw(`${colorize("blue", "[API]")} - API instance base path is set to ${colorize("yellow", INSTANCE_BASE)}. Configure this with the ${colorize("yellow", "DIVINE_LAB_REQUEST_INSTANCE_BASE")} environment variable.`);
 
 type httpMethod = "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
 /** Type definition for the success response payload.
@@ -38,7 +40,7 @@ export function errorResponse(res: FastifyReply, error: ServerErrorKey, { title,
     if (API_LOG) logger.raw(`${new Date().toISOString()} ${colorize("red", "[API]")} - ${colorize("gray", res.request.ip)} - ${colorize("red", (status || errorDef.status) as unknown as string)} - ${res.request.url} : ${colorize("gray", `${title || errorDef.title} - ${detail || errorDef.detail}`)}`);
     res.code(status || errorDef.status).send({
         status: status || errorDef.status,
-        instance: res.request.url,
+        instance: `${INSTANCE_BASE}${res.request.url}`,
         title: title || errorDef.title,
         detail: detail || errorDef.detail,
         type: type || errorDef.type,
