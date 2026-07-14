@@ -1,4 +1,4 @@
-import { SERVER_ERRORS, type ServerErrorOptions, type ServerErrorKey } from "../errors/BackendErrors";
+import { SERVER_ERRORS, type ServerErrorOptions, type ServerErrorKey } from "../errors/BackendErrors.js";
 
 /** Custom API Error class for standardized error handling
  * @extends Error

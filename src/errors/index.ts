@@ -1,2 +1,2 @@
-export * from "./APIError";
-export * from "./BackendErrors";
+export * from "./APIError.js";
+export * from "./BackendErrors.js";

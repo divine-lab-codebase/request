@@ -1,9 +1,9 @@
-import { SERVER_ERRORS, type ServerErrorOptions, type ServerErrorKey } from "../errors/BackendErrors";
+import { SERVER_ERRORS, type ServerErrorOptions, type ServerErrorKey } from "../errors/BackendErrors.js";
 import { type Static, type TObject } from "@sinclair/typebox";
-import { type FastifyRequest } from "fastify/types/request";
-import { type FastifyReply } from "fastify/types/reply";
+import { type FastifyRequest } from "fastify/types/request.js";
+import { type FastifyReply } from "fastify/types/reply.js";
 import { colorize } from "@divine-lab/logger/colors";
-import { APIError } from "../errors/APIError";
+import { APIError } from "../errors/APIError.js";
 import { type FastifyInstance } from "fastify";
 import logger from "@divine-lab/logger";
 
