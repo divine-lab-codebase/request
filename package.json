@@ -1,6 +1,6 @@
 {
     "name": "@divine-lab/request",
-    "version": "2.0.1",
+    "version": "2.0.2",
     "description": "Simple utility for standardizing request and response objects.",
     "author": {
         "name": "Ishpreet Singh",
