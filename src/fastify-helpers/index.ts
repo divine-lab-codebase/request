@@ -6,11 +6,10 @@ import { colorize } from "@divine-lab/logger/colors";
 import { APIError } from "../errors/APIError.js";
 import { type FastifyInstance } from "fastify";
 import logger from "@divine-lab/logger";
+import Config from "../request.js";
 
-const API_LOG = process.env.DIVINE_LAB_REQUEST_API_LOG === "true";
-logger.raw(`${colorize("blue", "[API]")} - API logging is ${API_LOG ? colorize("green", "enabled") : colorize("red", "disabled")} - ${API_LOG ? "API requests and responses will be logged." : `to enable, set ${colorize("yellow", "DIVINE_LAB_REQUEST_API_LOG")}=true in environment variables`}`);
-const INSTANCE_BASE = process.env.DIVINE_LAB_REQUEST_INSTANCE_BASE || "";
-logger.raw(`${colorize("blue", "[API]")} - API instance base path is set to ${colorize("yellow", INSTANCE_BASE)}. Configure this with the ${colorize("yellow", "DIVINE_LAB_REQUEST_INSTANCE_BASE")} environment variable.`);
+const API_LOG = Config.API_LOG;
+const INSTANCE_BASE = Config.INSTANCE_BASE;
 
 type httpMethod = "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
 type RateLimitConfig = { max: number; TimeWindow: string; keyGenerator?: (req: FastifyRequest) => string };
