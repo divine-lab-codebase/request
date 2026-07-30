@@ -41,7 +41,7 @@
         "typescript": "^6.0.3"
     },
     "dependencies": {
-        "@divine-lab/logger": "^2.0.1",
+        "@divine-lab/logger": "^3.0.3",
         "@sinclair/typebox": "^0.34.49"
     }
 }
