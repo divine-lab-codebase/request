@@ -121,6 +121,7 @@ Additionally if a `400 Bad request` is made, then this handler should handle it 
 - 1.1.1: fixed data response for the rate-limit in global error handler for fastify.
 - 1.2.0: added support for instance base path in error responses via environment variable.
 - 1.3.0: added support for rate-limiting when registering routes in the REGISTER_ROUTE function.
+- 2.1.0: upgrade to fastify 5.11.0, npm audit fix for security patches, added http `query` method to REGISTER_ROUTE function.
 
 #### Contact:
 
