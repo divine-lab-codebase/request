@@ -11,7 +11,7 @@ import Config from "../request.js";
 const API_LOG = Config.API_LOG;
 const INSTANCE_BASE = Config.INSTANCE_BASE;
 
-type httpMethod = "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
+type httpMethod = "GET" | "POST" | "PUT" | "DELETE" | "PATCH" | "QUERY";
 type RateLimitConfig = { max: number; TimeWindow: string; keyGenerator?: (req: FastifyRequest) => string };
 /** Type definition for the success response payload.
  * @property {string} title - short, human-readable summary of the response
