@@ -10,6 +10,7 @@ import Config from "../request.js";
 
 const API_LOG = Config.API_LOG;
 const INSTANCE_BASE = Config.INSTANCE_BASE;
+const PRINT_ERROR_LEVEL = Config.PRINT_ERROR_LEVEL;
 
 type httpMethod = "GET" | "POST" | "PUT" | "DELETE" | "PATCH" | "QUERY";
 type RateLimitConfig = { max: number; TimeWindow: string; keyGenerator?: (req: FastifyRequest) => string };
@@ -111,12 +112,14 @@ export function REGISTER_ROUTE<BodyType extends TObject, QueryType extends TObje
  */
 export async function globalErrorHandler(error: any, _request: FastifyRequest, reply: FastifyReply): Promise<void> {
     if (error instanceof APIError) return errorResponse(reply, error.error, { title: error.title, detail: error.detail, type: error.type, data: error.data, status: error.status });
+    if (PRINT_ERROR_LEVEL === "debug") logger.error(`Error processing request: `, error);
     if (error.statusCode && error.statusCode === 429) return errorResponse(reply, "TOO_MANY_REQUESTS", { title: "Too Many Requests", detail: "You have sent too many requests in a given amount of time. Please try again later.", data: `Retry in ${error.message.match(/\d+\s+\w+/)?.[0]}`, status: 429 });
     if (error.validation) {
         const data = [];
         for (const err of error.validation) data.push({ property: err.instancePath ? err.instancePath.substring(1) : err.params.missingProperty || "unknown", message: `${error.validationContext} ${err.message}` });
         return errorResponse(reply, "BAD_REQUEST", { detail: "Invalid request data, try again with proper formatting", data: data });
     }
-    logger.error(`Error processing request: ${error.message}`);
+    if (error.message === "Method 'QUERY' must provide a 'Content-Type' header.") return errorResponse(reply, "BAD_REQUEST", { detail: "The 'QUERY' method must provide a 'Content-Type' header." });
+    if (PRINT_ERROR_LEVEL === "message") logger.error(`Error processing request: ${error.message}`);
     return errorResponse(reply, "INTERNAL_SERVER_ERROR", { title: "Internal Server Error", detail: "An unexpected error occurred", type: "about:blank", data: null, status: 500 });
 }

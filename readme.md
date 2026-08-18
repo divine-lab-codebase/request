@@ -114,6 +114,7 @@ Additionally if a `400 Bad request` is made, then this handler should handle it 
   Enable by setting ENV Variable `DIVINE_LAB_REQUEST_API_LOG` to `true`.
 - Supports base path for `instance` property of error responses via `DIVINE_LAB_REQUEST_INSTANCE_BASE`,
   Defaults to empty string.
+- `DIVINE_LAB_REQUEST_PRINT_ERROR_LEVEL`: Specified how to print a Non-APIError error in the global error handler. values -> "none" (does not display anything) | "message" -> (displays error.message when it is a Un-handled error) | "debug" -> (prints all non APIError errors in full regardless it is handled or not). default: "message"
 
 #### Updates:
 
@@ -123,6 +124,7 @@ Additionally if a `400 Bad request` is made, then this handler should handle it 
 - 1.3.0: added support for rate-limiting when registering routes in the REGISTER_ROUTE function.
 - 2.1.0: upgrade to fastify 5.11.0, npm audit fix for security patches, added http `query` method to REGISTER_ROUTE function.
 - 2.1.1: dependency update: upgrade to @divine-lab/logger 3.0.3
+- 2.1.2: Added env variables to debug application error response (not including APIErrors).
 
 #### Contact:
 
