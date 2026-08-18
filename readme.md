@@ -129,6 +129,7 @@ Additionally if a `400 Bad request` is made, then this handler should handle it 
 - 2.2.2: Fixed, handling of FST_ERR_ROUTE_MISSING_CONTENT_TYPE error.
 - 2.3.0: Added FastifyReply interface for `computedResponse` to store the response data for audits or onResponse hooks.
 - 2.3.1: Moved interface to appropriate file.
+- 2.3.2: Added attachment of instance to `computedResponse` on a success response.
 
 #### Contact:
 

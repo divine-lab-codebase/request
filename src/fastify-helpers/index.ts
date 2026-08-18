@@ -15,7 +15,7 @@ declare module "fastify" {
             success: boolean;
             title: string;
             detail: string;
-            instance?: string;
+            instance: string;
             type?: string;
             data: any;
         };
@@ -91,6 +91,7 @@ export function successResponse(res: FastifyReply, status = 200, { title = "Succ
         status,
         success: true,
         title,
+        instance: `${INSTANCE_BASE}${res.request.url}`,
         detail,
         data,
     };
