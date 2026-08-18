@@ -124,7 +124,7 @@ Additionally if a `400 Bad request` is made, then this handler should handle it 
 - 1.3.0: added support for rate-limiting when registering routes in the REGISTER_ROUTE function.
 - 2.1.0: upgrade to fastify 5.11.0, npm audit fix for security patches, added http `query` method to REGISTER_ROUTE function.
 - 2.1.1: dependency update: upgrade to @divine-lab/logger 3.0.3
-- 2.2.1: Added env variables to debug application error response (not including APIErrors).
+- 2.2.0: Added env variables to debug application error response (not including APIErrors).
 
 #### Contact:
 
