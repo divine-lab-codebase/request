@@ -114,12 +114,23 @@ export async function globalErrorHandler(error: any, _request: FastifyRequest, r
     if (error instanceof APIError) return errorResponse(reply, error.error, { title: error.title, detail: error.detail, type: error.type, data: error.data, status: error.status });
     if (PRINT_ERROR_LEVEL === "debug") logger.error(`Error processing request: `, error);
     if (error.statusCode && error.statusCode === 429) return errorResponse(reply, "TOO_MANY_REQUESTS", { title: "Too Many Requests", detail: "You have sent too many requests in a given amount of time. Please try again later.", data: `Retry in ${error.message.match(/\d+\s+\w+/)?.[0]}`, status: 429 });
-    if (error.validation) {
-        const data = [];
-        for (const err of error.validation) data.push({ property: err.instancePath ? err.instancePath.substring(1) : err.params.missingProperty || "unknown", message: `${error.validationContext} ${err.message}` });
-        return errorResponse(reply, "BAD_REQUEST", { detail: "Invalid request data, try again with proper formatting", data: data });
+    if (error.code) {
+        switch (error.code) {
+            case "FST_ERR_VALIDATION":
+                if (error.validation) {
+                    const data = [];
+                    for (const err of error.validation) data.push({ property: err.instancePath ? err.instancePath.substring(1) : err.params.missingProperty || "unknown", message: `${error.validationContext} ${err.message}` });
+                    return errorResponse(reply, "BAD_REQUEST", { detail: "Invalid request data, try again with proper formatting", data: data });
+                }
+                break;
+            case "FST_ERR_ROUTE_MISSING_CONTENT":
+                return errorResponse(reply, "BAD_REQUEST", { detail: "The request is missing a required 'Content-Type' header." });
+            case "FST_ERR_ROUTE_MISSING_CONTENT":
+                return errorResponse(reply, "BAD_REQUEST", { detail: "The request is missing a required body." });
+            default:
+                break;
+        }
     }
-    if (error.message === "Method 'QUERY' must provide a 'Content-Type' header.") return errorResponse(reply, "BAD_REQUEST", { detail: "The 'QUERY' method must provide a 'Content-Type' header." });
     if (PRINT_ERROR_LEVEL === "message") logger.error(`Error processing request: ${error.message}`);
     return errorResponse(reply, "INTERNAL_SERVER_ERROR", { title: "Internal Server Error", detail: "An unexpected error occurred", type: "about:blank", data: null, status: 500 });
 }
