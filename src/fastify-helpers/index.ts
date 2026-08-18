@@ -8,6 +8,20 @@ import { type FastifyInstance } from "fastify";
 import logger from "@divine-lab/logger";
 import Config from "../request.js";
 
+declare module "fastify" {
+    interface FastifyReply {
+        computedResponse?: {
+            status: number;
+            success: boolean;
+            title: string;
+            detail: string;
+            instance?: string;
+            type?: string;
+            data: any;
+        };
+    }
+}
+
 const API_LOG = Config.API_LOG;
 const INSTANCE_BASE = Config.INSTANCE_BASE;
 const PRINT_ERROR_LEVEL = Config.PRINT_ERROR_LEVEL;
