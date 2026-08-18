@@ -126,6 +126,7 @@ Additionally if a `400 Bad request` is made, then this handler should handle it 
 - 2.1.1: dependency update: upgrade to @divine-lab/logger 3.0.3
 - 2.2.0: Added env variables to debug application error response (not including APIErrors).
 - 2.2.1: Stored internal error handling
+- 2.2.2: Fixed, handling of FST_ERR_ROUTE_MISSING_CONTENT_TYPE error.
 
 #### Contact:
 

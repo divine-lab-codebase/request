@@ -123,7 +123,7 @@ export async function globalErrorHandler(error: any, _request: FastifyRequest, r
                     return errorResponse(reply, "BAD_REQUEST", { detail: "Invalid request data, try again with proper formatting", data: data });
                 }
                 break;
-            case "FST_ERR_ROUTE_MISSING_CONTENT":
+            case "FST_ERR_ROUTE_MISSING_CONTENT_TYPE":
                 return errorResponse(reply, "BAD_REQUEST", { detail: "The request is missing a required 'Content-Type' header." });
             case "FST_ERR_ROUTE_MISSING_CONTENT":
                 return errorResponse(reply, "BAD_REQUEST", { detail: "The request is missing a required body." });
