@@ -14,6 +14,7 @@ const PRINT_ERROR_LEVEL = Config.PRINT_ERROR_LEVEL;
 
 type httpMethod = "GET" | "POST" | "PUT" | "DELETE" | "PATCH" | "QUERY";
 type RateLimitConfig = { max: number; TimeWindow: string; keyGenerator?: (req: FastifyRequest) => string };
+
 /** Type definition for the success response payload.
  * @property {string} title - short, human-readable summary of the response
  * @property {string} detail - detailed description of the response
@@ -39,13 +40,22 @@ type SuccessResponse = {
 export function errorResponse(res: FastifyReply, error: ServerErrorKey, { title, detail, type, data, status }: ServerErrorOptions = {}): void {
     const errorDef = SERVER_ERRORS[error];
     if (API_LOG) logger.raw(`${new Date().toISOString()} ${colorize("red", "[API]")} - ${colorize("red", (status || errorDef.status) as unknown as string)} - ${colorize("gray", `[${res.request.method}]`)} - ${colorize("gray", res.request.ip)} - ${res.request.url} : ${colorize("gray", `${title || errorDef.title} - ${detail || errorDef.detail}`)}`);
-    res.code(status || errorDef.status).send({
+    res.computedResponse = {
         status: status || errorDef.status,
+        success: false,
         instance: `${INSTANCE_BASE}${res.request.url}`,
         title: title || errorDef.title,
         detail: detail || errorDef.detail,
         type: type || errorDef.type,
         data: data || null,
+    };
+    res.code(res.computedResponse.status).send({
+        status: res.computedResponse.status,
+        instance: res.computedResponse.instance,
+        title: res.computedResponse.title,
+        detail: res.computedResponse.detail,
+        type: res.computedResponse.type,
+        data: res.computedResponse.data,
     });
 }
 
@@ -63,11 +73,18 @@ export function errorResponse(res: FastifyReply, error: ServerErrorKey, { title,
  */
 export function successResponse(res: FastifyReply, status = 200, { title = "Success", detail = "Success", data = null }: SuccessResponse = { title: "Success", detail: "Success", data: null }): void {
     if (API_LOG) logger.raw(`${new Date().toISOString()} ${colorize("green", "[API]")} - ${colorize("green", status as unknown as string)} - ${colorize("gray", `[${res.request.method}]`)} - ${colorize("gray", res.request.ip)} - ${res.request.url} : ${colorize("gray", title)}`);
-    res.code(status).send({
+    res.computedResponse = {
+        status,
         success: true,
         title,
         detail,
         data,
+    };
+    res.code(res.computedResponse.status).send({
+        success: res.computedResponse.success,
+        title: res.computedResponse.title,
+        detail: res.computedResponse.detail,
+        data: res.computedResponse.data,
     });
 }
 

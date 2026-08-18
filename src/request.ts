@@ -39,3 +39,17 @@ if (!requestGlobalState[GLOBAL_REQUEST_KEY]) {
 }
 
 export default requestGlobalState[GLOBAL_REQUEST_KEY] as REQUEST_DATA;
+
+declare module "fastify" {
+    interface FastifyReply {
+        computedResponse?: {
+            status: number;
+            success: boolean;
+            title: string;
+            detail: string;
+            instance?: string;
+            type?: string;
+            data: any;
+        };
+    }
+}
