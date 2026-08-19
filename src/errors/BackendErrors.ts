@@ -52,6 +52,12 @@ export const SERVER_ERRORS = {
         title: "Conflict",
         detail: "The request conflicts with the current state of the server.",
     },
+    UNSUPPORTED_MEDIA_TYPE: {
+        status: 415,
+        type: "about:blank",
+        title: "Unsupported Media Type",
+        detail: "The request has an unsupported media type.",
+    },
     TOO_MANY_REQUESTS: {
         status: 429,
         type: "about:blank",
