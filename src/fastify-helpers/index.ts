@@ -63,7 +63,7 @@ export function errorResponse(res: FastifyReply, error: ServerErrorKey, { title,
         type: type || errorDef.type,
         data: data || null,
     };
-    res.code(res.computedResponse.status).send({
+    res.code(res.computedResponse.status).type("application/problem+json").send({
         status: res.computedResponse.status,
         instance: res.computedResponse.instance,
         title: res.computedResponse.title,
